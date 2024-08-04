@@ -52,6 +52,9 @@
             display: none;
             text-align: center;
         }
+        .heyyy{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -69,12 +72,14 @@
         <input id="userInputVerCode" type="text" name="userInputVerCode" placeholder="Enter Received Verification Code If Your Email IS Legit😈" required>
         <button type="submit">Check</button>
     </form>
-    <h1 id="correct" style="color: green;">
-        Your email IS legit😱
-    </h1>
-    <h1 id="wrong" style="color: brown;">
-        Your email isnt legit.😠
-    </h1>
+    <div class="heyyy">
+        <h1 id="correct" style="color: green;">
+            Your email IS legit😱
+        </h1>
+        <h1 id="wrong" style="color: brown;">
+            Your email isnt legit.😠
+        </h1>
+    </div>
     <script type="text/javascript">
         (function() {
             emailjs.init('HQfCyAaLrSEIcQCj3'); // Replace 'YOUR_USER_ID' with your EmailJS user ID
@@ -95,12 +100,9 @@
             // Send the email using EmailJS
             emailjs.sendForm('service_x7jykgx', 'template_vtofgqn', '#SendVerCode')
             .then(function(response) {
-                alert('Mail sent successfully!');
                 document.getElementById("SendVerCode").style.display = "none";
                 document.getElementById("check").style.display = "flex";
             }, function(error) {
-                console.error('Failed to send email:', error);
-                alert('Failed to send email. Please try again.');
             });
         }
 
