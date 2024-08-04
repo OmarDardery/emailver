@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <style>
+        #title-div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0px;
+            border-bottom: 2px solid black;
+            text-align: center;
+        }
+        p {
+            align-self: flex-end;
+            margin-top: 0px;
+        }
+        h1 {
+            margin: 10px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        form * {
+            width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        button {
+            width: fit-content;
+            align-self: flex-end;
+            margin-right: 50px;
+        }
+        #check {
+            display: none;
+        }
+        #correct{
+            text-align: center;
+            display: none;
+        }
+        #wrong{
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="title-div">
+        <h1>Find Out If Your Email Is Legit🤫</h1>
+        <p>(a front-end Web Development project by Omar El-Dardery)</p>
+    </div>
+    <form id="SendVerCode" onsubmit="sendEmail(event)">
+        <input id="receiver" type="email" name="to_email" placeholder="Your LEGIT Email..." required>
+        <input id="verCode" type="hidden" name="verCode" value="">
+        <button type="submit">Send</button>
+    </form>
+    <form id="check" onsubmit="checkVerCode(event)">
+        <p style="color: green;">✅Verification code is sent, is your email truly legit??!!</p>
+        <input id="userInputVerCode" type="text" name="userInputVerCode" placeholder="Enter Received Verification Code If Your Email IS Legit😈" required>
+        <button type="submit">Check</button>
+    </form>
+    <h1 id="correct" style="color: green;">
+        Your email IS legit😱
+    </h1>
+    <h1 id="wrong" style="color: brown;">
+        Your email isnt legit.😠
+    </h1>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init('HQfCyAaLrSEIcQCj3'); // Replace 'YOUR_USER_ID' with your EmailJS user ID
+        })();
+
+        function sendEmail(event) {
+            event.preventDefault();
+            
+            // Generate a verification code
+            var verCode = Math.floor(Math.random() * 900000) + 100000;
+            
+            // Store the code in localStorage
+            localStorage.setItem('verCode', verCode);
+
+            // Update the hidden input with the verification code
+            document.getElementById("verCode").value = verCode;
+
+            // Send the email using EmailJS
+            emailjs.sendForm('service_x7jykgx', 'template_vtofgqn', '#SendVerCode')
+            .then(function(response) {
+                alert('Mail sent successfully!');
+                document.getElementById("SendVerCode").style.display = "none";
+                document.getElementById("check").style.display = "flex";
+            }, function(error) {
+                console.error('Failed to send email:', error);
+                alert('Failed to send email. Please try again.');
+            });
+        }
+
+        function checkVerCode(event) {
+            event.preventDefault();
+            
+            // Get the stored verification code from localStorage
+            var storedVerCode = localStorage.getItem('verCode');
+            var userInputVerCode = document.getElementById("userInputVerCode").value;
+            
+            // Check if the user input matches the stored verification code
+            if (storedVerCode === userInputVerCode) {
+                document.getElementById("check").style.display = "none";
+                document.getElementById("correct").style.display = "flex";
+            } else {
+                document.getElementById("check").style.display = "none";
+                document.getElementById("wrong").style.display = "flex";
+            }
+        }
+    </script>
+</body>
+</html>
+
